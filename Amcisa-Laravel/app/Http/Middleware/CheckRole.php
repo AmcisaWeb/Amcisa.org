@@ -16,7 +16,7 @@ class CheckRole
      */
     public function handle($request, Closure $next, $role)
     {
-        if ($request->user()->roles->role != $role) {
+        if ($request->user()->role != $role) {
             return response("Insufficient permission",401);
         }
         return $next($request);

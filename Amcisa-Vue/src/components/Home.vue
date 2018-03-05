@@ -1,6 +1,5 @@
 <template>
   <div>
-    Testing Testing
     <h1 class="title" style="font-size: 6rem;">AMCISA</h1>
     <login-form/>
     <events/>

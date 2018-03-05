@@ -66,7 +66,13 @@ Route::post('/amtee',[
     'middleware' => 'auth:api'
 ]);
 
+Route::post('/info/post',[
+    'uses' => 'InfoController@postInfo',
+    'middleware' => ['auth:api','role:admin']
+]);
+
 Route::get('/clear-cache', function() {
+    //execute php artisan cache:clear
     $exitCode = Artisan::call('cache:clear');
     return response("Cleared cache with wxit code: ".$exitCode,"200");
 });

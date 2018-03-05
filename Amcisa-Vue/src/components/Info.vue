@@ -3,7 +3,7 @@
     <div v-for="e in events" style="max-width: 300px; margin-left: auto; margin-right: auto; margin-top: 50px">
       <el-card :body-style="{ padding: '0px' }">
         <el-button type="text" class="button" @click="handleClick()">
-          <img src="http://amcisa.org/api/download/15184543725198.jpeg" class="image">
+          <img src="http://localhost/api/download/15184543725198.jpeg" class="image">
           <div style="padding: 14px;">
             <h3>{{e.content.title}}</h3>
             <div class="bottom clearfix">
@@ -43,8 +43,8 @@ export default {
           this.events = response.data.events
           console.log(this.events)
         }).catch(error => {
-          console.log(error)
-        })
+        console.log(error)
+      })
     }
   },
   computed: {
