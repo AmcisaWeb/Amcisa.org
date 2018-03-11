@@ -1,7 +1,7 @@
 <template>
   <div style="width: 600px; margin-left: auto; margin-right: auto">
     <h5>Add Info Here</h5>
-    <el-input placeholder="Category" v-model="info.catagory"></el-input>
+    <el-input placeholder="Category" v-model="info.category"></el-input>
     <el-input placeholder="Title" v-model="info.title"></el-input>
     <el-input
       type="textarea"
