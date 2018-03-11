@@ -7,7 +7,6 @@
 <script>
 import NavBar from './components/NavBar'
 import LoginForm from './components/LoginForm'
-import Informations from './components/Informations'
 import Events from './components/Events'
 import AddEvent from './components/AddEvent'
 import backup from './components/backup'
@@ -18,7 +17,6 @@ export default {
   components: {
     'nav-bar': NavBar,
     'login-form': LoginForm,
-    'informations': Informations,
     'events': Events,
     'add-event': AddEvent,
     'backup': backup
@@ -41,9 +39,5 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
-}
-
-body{
-  background-color: lightgrey;
 }
 </style>

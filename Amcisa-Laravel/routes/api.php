@@ -19,17 +19,17 @@ Route::get('/user',[
 ]);
 
 Route::post('/event/post',[
-    'uses' => 'EventController@postEvent',
-    'middleware' => ['auth:api'],
+    'uses' => 'EventController@postEvent'
+
 ]);
 
 Route::get('/event/get/{id}',[
-    'uses' => 'EventController@getEvents',
-    'middleware' => 'auth:api'
+    'uses' => 'EventController@getEvents'
 ]);
 
-Route::get('/event/get/',[
-    'uses' => 'EventController@getEvents',
+Route::post('/eventData/post/{id}',[
+    'uses' => 'EventController@postEventData',
+    'middleware' => 'guest',
     'middleware' => 'auth:api'
 ]);
 
@@ -57,6 +57,10 @@ Route::get('/download/{name}',[
     'uses' => 'FileController@download'
 ]);
 
+Route::get('/download/{folder}/{name}',[
+    'uses' => 'FileController@downloadfolder'
+]);
+
 Route::post('/sendemail',[
     'uses' => 'EmailController@sendemail'
 ]);
@@ -69,6 +73,10 @@ Route::post('/amtee',[
 Route::post('/info/post',[
     'uses' => 'InfoController@postInfo',
     'middleware' => ['auth:api','role:admin']
+]);
+
+Route::get('/info/get',[
+    'uses' => 'InfoController@getInfo'
 ]);
 
 Route::get('/clear-cache', function() {

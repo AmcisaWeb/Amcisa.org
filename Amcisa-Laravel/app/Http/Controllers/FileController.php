@@ -11,21 +11,22 @@ class FileController extends Controller{
 
     public function upload(Request $request)
     {
-        if($request->input('extension') == null || $request->input('extension') == '')
-            return response()->json("extension not provided",406);
-        if(!$request->hasFile('file'))
-            return response()->json("file not found",406);
-
         $filename = microtime(true)*10000;
-        $ext = $request->input('extension');
-
+        $ext = $request->file('file')->getClientOriginalExtension();
         $request->file('file')->move('../upload/', $filename.'.'.$ext);
-        return response()->json("success uploaded",201);
+
+        return response()->json('Success upload',201);
     }
 
     public function download($name)
     {
         return response()->download(public_path()."/../upload/".$name);
     }
+    public function downloadfolder($folder, $name)
+    {
+        return response()->download(public_path()."/../upload/".$folder.'/'.$name);
+    }
+
+
 
 }

@@ -21,7 +21,7 @@ export default {
   data () {
     return {
       info: {
-        catagory: '',
+        category: '',
         title: '',
         description: ''
       }

@@ -1,18 +1,22 @@
 <template>
   <div>
-    <div v-for="e in events" style="max-width: 300px; margin-left: auto; margin-right: auto; margin-top: 50px">
-      <el-card :body-style="{ padding: '0px' }">
-        <el-button type="text" class="button" @click="handleClick()">
-          <img src="http://localhost/api/download/15184543725198.jpeg" class="image">
-          <div style="padding: 14px;">
-            <h3>{{e.content.title}}</h3>
-            <div class="bottom clearfix">
-              <time class="time">{{e.content.description}}</time>
-            </div>
+    <div v-if="loadCompleted">
+      <div v-for="category in info" style="font-size: large;">
+        <el-card class="box-card" style="margin: 50px">
+          <el-collapse style="text-align: left">
+          <h4>{{category[0].category}}</h4>
+          <div v-for="item in category">
+            <el-collapse-item :title="item.title" >
+              <pre style="margin-bottom: -10px">{{item.description}}</pre>
+            </el-collapse-item>
           </div>
-        </el-button>
-      </el-card>
+        </el-collapse>
+        </el-card>
+      </div>
     </div>
+    <router-link to="/" style="align-self: left">
+      <el-button style="width: 300px; margin-bottom: 10px">返回主页</el-button>
+    </router-link>
   </div>
 </template>
 
@@ -23,61 +27,39 @@ export default {
   name: 'Events',
   data () {
     return {
-      events: null
+      info: [],
+      loadCompleted: false
     }
   },
   methods: {
-    handleClick() {
-      this.$router.push('Event')
-    }
+
   },
-  watch: {
-    isLogin: function () {
-      axios.defaults.baseURL = this.$store.state.baseUrl
-      var axiosEvent = axios.create({
-        headers: {'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + this.$store.state.currentUser.token }
-      })
-      axiosEvent.get('/api/event/get/*')
-        .then(response => {
-          this.events = response.data.events
-          console.log(this.events)
-        }).catch(error => {
+  async created () {
+    axios.defaults.baseURL = this.$store.state.baseUrl
+    var axiosInfo = axios.create({
+      headers: {'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.$store.state.currentUser.token }
+    })
+    await axiosInfo.get('/api/info/get')
+      .then((response) => {
+        var res = response.data.info
+        res.forEach((e)=>{
+          var i = 0;
+          for(i;i<this.info.length;i++){
+            if(this.info[i][0].category == e.content.category) {
+              this.info[i].push(e.content);
+              break;
+            }
+          }
+          if(i>=this.info.length){  //if not assigned in the for loop
+            this.info[i] = [];
+            this.info[i].push(e.content);
+          }
+        })
+      }).catch((error) => {
         console.log(error)
       })
-    }
-  },
-  computed: {
-    isLogin () {
-      return this.$store.state.currentUser.isLoggedIn
-    }
+      this.loadCompleted = true
   }
 }
 </script>
-
-<style scoped>
-  .bottom {
-    margin-top: 13px;
-    line-height: 12px;
-  }
-
-  .button {
-    padding: 0;
-    float: right;
-  }
-
-  .image {
-    width: 100%;
-    display: block;
-  }
-
-  .clearfix:before,
-  .clearfix:after {
-    display: table;
-    content: "";
-  }
-
-  .clearfix:after {
-    clear: both
-  }
-</style>

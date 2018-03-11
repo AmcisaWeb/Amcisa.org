@@ -6,7 +6,8 @@ import router from './router'
 import {store} from './store'
 import Element from 'element-ui'
 import BootstrapVue from 'bootstrap-vue'
-
+import UUID from 'vue-uuid'
+import Sortable from 'vue-sortable'
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -15,6 +16,8 @@ import 'element-ui/lib/theme-chalk/index.css'
 Vue.config.productionTip = false
 Vue.use(BootstrapVue)
 Vue.use(Element)
+Vue.use(UUID)
+Vue.use(Sortable)
 
 /* eslint-disable no-new */
 new Vue({

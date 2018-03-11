@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div v-for="e in events" style="max-width: 300px; margin-left: auto; margin-right: auto; margin-top: 50px">
+    <div v-for="e in events" style="max-width: 300px; margin-left: auto; margin-right: auto; margin-top: 50px; margin-bottom: 50px">
       <el-card :body-style="{ padding: '0px' }">
-        <el-button type="text" class="button" @click="handleClick()">
-          <img src="http://amcisa.org/api/download/15184543725198.jpeg" class="image">
+        <el-button type="text" class="button" @click="handleClick(e.id)">
+          <img :src="$store.state.baseUrl + '/api/download'+ e.content.thumbnail.filename" class="image">
           <div style="padding: 14px;">
             <h3>{{e.content.title}}</h3>
             <div class="bottom clearfix">
@@ -27,13 +27,10 @@ export default {
     }
   },
   methods: {
-    handleClick() {
-      this.$router.push('Event')
-    }
-  },
-  watch: {
-    isLogin: function () {
-      axios.defaults.baseURL = this.$store.state.baseUrl
+    handleClick(eventId) {
+      this.$router.push({path: '/Event?id=' + eventId})
+    },
+    loadEvents(){
       var axiosEvent = axios.create({
         headers: {'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + this.$store.state.currentUser.token }
@@ -41,16 +38,25 @@ export default {
       axiosEvent.get('/api/event/get/*')
         .then(response => {
           this.events = response.data.events
-          console.log(this.events)
+          console.log(response.data.events)
         }).catch(error => {
-          console.log(error)
-        })
+        console.log(error)
+      })
+    }
+  },
+  watch: {
+    isLogin: function () {
+      this.loadEvents()
     }
   },
   computed: {
     isLogin () {
       return this.$store.state.currentUser.isLoggedIn
     }
+  },
+  created(){
+    axios.defaults.baseURL = this.$store.state.baseUrl
+    this.loadEvents()
   }
 }
 </script>

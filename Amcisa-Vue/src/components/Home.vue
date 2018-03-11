@@ -1,6 +1,10 @@
 <template>
   <div>
     <h1 class="title" style="font-size: 6rem;">AMCISA</h1>
+    <router-link to="/info">
+      <el-button style="width: 300px; margin-bottom: 10px">升学资讯</el-button>
+    </router-link>
+    <about-us></about-us>
     <login-form/>
     <events/>
   </div>
@@ -11,6 +15,7 @@ import axios from 'axios'
 import LoginForm from './LoginForm'
 import Events from './Events'
 import AddEvent from './AddEvent'
+import AboutUs from './AboutUs'
 
 export default {
   name: 'Home',
@@ -21,9 +26,11 @@ export default {
     }
   },
   components: {
+    AboutUs,
     'login-form': LoginForm,
     'events': Events,
-    'add-event': AddEvent
+    'add-event': AddEvent,
+    'about-us': AboutUs
   },
   methods: {
     /*
@@ -53,8 +60,8 @@ export default {
         console.log(response)
       })
         .catch(function () {
-          console.log('FAILURE!!')
-        })
+        console.log('FAILURE!!')
+      })
     },
 
     /*
