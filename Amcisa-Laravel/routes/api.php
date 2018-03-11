@@ -19,8 +19,8 @@ Route::get('/user',[
 ]);
 
 Route::post('/event/post',[
-    'uses' => 'EventController@postEvent'
-
+    'uses' => 'EventController@postEvent',
+    'middleware' => 'auth:api'
 ]);
 
 Route::get('/event/get/{id}',[
@@ -29,7 +29,6 @@ Route::get('/event/get/{id}',[
 
 Route::post('/eventData/post/{id}',[
     'uses' => 'EventController@postEventData',
-    'middleware' => 'guest',
     'middleware' => 'auth:api'
 ]);
 
