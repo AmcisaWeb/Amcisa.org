@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Amtee extends Model
+class bobi extends Model
 {
     //
 }

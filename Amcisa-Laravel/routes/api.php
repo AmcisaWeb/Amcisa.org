@@ -64,11 +64,6 @@ Route::post('/sendemail',[
     'uses' => 'EmailController@sendemail'
 ]);
 
-Route::post('/amtee',[
-    'uses' => 'AmteeController@vote',
-    'middleware' => 'auth:api'
-]);
-
 Route::post('/info/post',[
     'uses' => 'InfoController@postInfo',
     'middleware' => ['auth:api','role:admin']
@@ -83,3 +78,12 @@ Route::get('/clear-cache', function() {
     $exitCode = Artisan::call('cache:clear');
     return response("Cleared cache with wxit code: ".$exitCode,"200");
 });
+
+Route::post('/bobi', function (Request $request){
+    $user = \Illuminate\Support\Facades\Auth::user();
+    $bobi = new \App\Bobi();
+    $bobi->user_id = $user->id;
+    $bobi->user_name = $user->name_ch;
+    $bobi->data = $request->input('data');
+    $bobi->save();
+})->middleware('auth:api');
