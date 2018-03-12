@@ -83,7 +83,9 @@ Route::post('/bobi', function (Request $request){
     $user = \Illuminate\Support\Facades\Auth::user();
     $bobi = new \App\Bobi();
     $bobi->user_id = $user->id;
-    $bobi->user_name = $user->name_ch;
+    $bobi->user_name = $user->name_en;
     $bobi->data = $request->input('data');
     $bobi->save();
+    return response('posted successful', 200);
+
 })->middleware('auth:api');
