@@ -27,6 +27,11 @@ Route::get('/event/get/{id}',[
     'uses' => 'EventController@getEvents'
 ]);
 
+Route::get('/eventData/get/{id}',[
+    'uses' => 'EventController@getEventData',
+    'middleware' => 'auth:api'
+]);
+
 Route::post('/eventData/post/{id}',[
     'uses' => 'EventController@postEventData',
     'middleware' => 'auth:api'
@@ -89,3 +94,4 @@ Route::post('/bobi', function (Request $request){
     return response('posted successful', 200);
 
 })->middleware('auth:api');
+

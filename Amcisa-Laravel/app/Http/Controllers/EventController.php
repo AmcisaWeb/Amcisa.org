@@ -134,6 +134,10 @@ class EventController extends Controller{
 
         return response()->json('success posted' ,201);
     }
+    public function getEventData($id){
+
+    }
+
     private function changeAllArrayValuesByKey($array, $key, $valueArray, &$startOn){
         if(array_key_exists($key,$array))
         {
