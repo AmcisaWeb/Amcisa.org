@@ -134,8 +134,22 @@ class EventController extends Controller{
 
         return response()->json('success posted' ,201);
     }
-    public function getEventData($id){
-
+    public function getEventData(Request $request, $id){
+        $fieldId = $request->input('fieldId');
+        $eventData = EventData::where('event_id',$id)->get();
+        $resArray = [];
+        foreach ($eventData as $e){
+            $id = json_decode($e->content,true)[0]['id'];
+            $content = json_decode($e->content,true)[0]['content'];
+            if($id == $fieldId){
+                if(array_key_exists($content, $resArray)){
+                    $resArray[$content] = $resArray[$content] + 1;
+                }else{
+                    $resArray[$content] = 1;
+                }
+            }
+        }
+        return response()->json($resArray,200);
     }
 
     private function changeAllArrayValuesByKey($array, $key, $valueArray, &$startOn){

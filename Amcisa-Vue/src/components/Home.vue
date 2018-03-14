@@ -63,7 +63,6 @@ export default {
         console.log('FAILURE!!')
       })
     },
-
     /*
       Handles a change on the file upload
     */

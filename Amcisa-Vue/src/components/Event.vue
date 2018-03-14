@@ -3,7 +3,7 @@
     <div v-if="this.$store.state.currentUser.isLoggedIn == true">
       <h2 style="margin-bottom: 80px">{{event.content.title}}</h2>
       <div v-for="field in event.content.fields">
-        <component style="margin-top: 10px" :field="field" v-on:dataChanged="onDataUpdated" v-bind:is="field.type"></component>
+        <component style="margin-top: 10px" :currentEventId="event.id" :field="field" v-on:dataChanged="onDataUpdated" v-bind:is="field.type"></component>
       </div>
     </div>
     <el-button type="primary" style="margin-top: 80px; margin-bottom: 50px" v-if="event.content.isSubmit" @click="onSubmit">提交</el-button>
