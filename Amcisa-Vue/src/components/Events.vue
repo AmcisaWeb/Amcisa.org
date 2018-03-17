@@ -3,11 +3,11 @@
     <div v-for="e in events" style="max-width: 300px; margin-left: auto; margin-right: auto; margin-top: 50px; margin-bottom: 50px">
       <el-card :body-style="{ padding: '0px' }">
         <el-button type="text" class="button" @click="handleClick(e.id)">
-          <img :src="$store.state.baseUrl + '/api/download'+ e.content.thumbnail.filename" class="image">
+          <img :src="$store.state.baseUrl + '/api/download'+ e.thumbnail.filename" class="image">
           <div style="padding: 14px;">
-            <h3>{{e.content.title}}</h3>
+            <h3>{{e.title}}</h3>
             <div class="bottom clearfix">
-              <time class="time">{{e.content.description}}</time>
+              <time class="time">{{e.description}}</time>
             </div>
           </div>
         </el-button>

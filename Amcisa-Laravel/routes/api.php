@@ -32,7 +32,7 @@ Route::get('/eventData/get/{id}',[
     'middleware' => 'auth:api'
 ]);
 
-Route::post('/eventData/post/{id}',[
+Route::post('/eventData/post/{eventId}/{pageId}',[
     'uses' => 'EventController@postEventData',
     'middleware' => 'auth:api'
 ]);
