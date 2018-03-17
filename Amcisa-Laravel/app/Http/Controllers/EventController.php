@@ -93,13 +93,14 @@ class EventController extends Controller{
         $event = Event::find($eventId);
         $eventData->event_id = $eventId;
         $eventData->page_id = $pageId;
-        $eventData->user_id = Auth::user()->id;
+        $user_id = Auth::user()->id;
+        $eventData->user_id = $user_id;
 
         $eventContent = json_decode($event->content);
         $eventDataDecode = json_decode($request->input('eventData'), true);
 
         foreach ($eventContent->page as $p){
-            if($p->id == $pageId && $p->isSubmitOnce == true && count(EventData::where('page_id',$pageId)->get())>0){
+            if($p->id == $pageId && $p->isSubmitOnce == true && count(EventData::where('user_id',$user_id)->where('page_id',$pageId)->get())>0){
                 return response()->json( 'can only submit once',421);
             }
         }
