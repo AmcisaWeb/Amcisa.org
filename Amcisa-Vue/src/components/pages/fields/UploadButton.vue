@@ -6,7 +6,8 @@
         action="https://jsonplaceholder.typicode.com/posts/"
         list-type="picture-card"
         :on-change="onChanged"
-        :on-remove="onRemoved">
+        :on-remove="onRemoved"
+        :limit="field.limit">
         <i class="el-icon-plus"></i>
       </el-upload>
       <el-dialog :visible.sync="dialogVisible">

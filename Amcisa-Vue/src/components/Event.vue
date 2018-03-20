@@ -41,7 +41,6 @@
         }).catch(error => {
           console.log(error)
         })
-
       this.loadCompleted = true
     },
     computed:{

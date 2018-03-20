@@ -1,57 +1,50 @@
 <template>
   <div>
-    <div class="title">
-      <div :hidden="false" ref="title">
-        <h5>{{data.field.title}}</h5>
-        <a href="javascript:void(0)" @click="$refs.title.hidden=true; $refs.titleEdit.hidden=false"><i class="el-icon-edit-outline"></i></a>
-      </div>
-      <div :hidden="true" ref="titleEdit">
-        <el-input
-          size="medium"
-          placeholder="Please input"
-          v-model="data.field.title"/>
-        <a href="javascript:void(0)" @click="$refs.title.hidden=false; $refs.titleEdit.hidden=true"><i class="el-icon-success"></i></a>
-      </div>
-    </div>
-    <div>
-      <el-radio v-model="radio7" label="1" border>Option A</el-radio>
-      <el-radio v-model="radio7" label="2" border>Option B</el-radio>
-    </div>
+    <el-dropdown @command="(e)=> {eventData.content = e}">
+      <el-button type="primary">
+        <div v-if="eventData.content == ''">
+          {{field.title}}<i class="el-icon-arrow-down el-icon--right"></i>
+        </div>
+        <div v-else>
+          {{eventData.content}}<i class="el-icon-arrow-down el-icon--right"></i>
+        </div>
+      </el-button>
+      <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item v-for="s in field.selections" :command="s">{{s}}</el-dropdown-item>
+      </el-dropdown-menu>
+    </el-dropdown>
   </div>
 </template>
 
 <script>
-  export default {
+export default {
     name: 'Selections',
-    props: ['id'],
+    props:['field','currentEventId'],
     data () {
       return {
-        data:{
-          field:{
-            id: '',
-            type: this.$options.name,
-            title: 'Please select',
-            isInput: true,
-            isMultiple: false,
-            selections: []
-          }
-        },
-        template: {
-          selection: {id:'', text:''}
+        eventData:{
+          id: this.field.id,
+          content: ''
         }
       }
     },
+    methods:{
+      onSelectImage(selected){
+        var len = (this.$store.state.baseUrl + '/api/download/').length
+        this.eventData.content = selected.src.substring(len)
+      }
+    },
     watch: {
-      data: {
+      eventData: {
         handler: function (newData, oldData) {
-          this.$emit('dataChanged',this.data)
+          this.$emit('dataChanged',this.eventData)
         },
         deep:true
       }
     },
-    created(){
-      this.data.field.id = this.id
-      this.$emit('created',this.data)
-    }
+  created(){
+      console.log(this.field)
   }
+}
 </script>
+

@@ -105,10 +105,9 @@ class EventController extends Controller{
             }
         }
 
-
         $files = $request->file('file');
         if($files!=null){
-            $foldername = event_id.'_'.$eventContent->title.'/response/'.Auth::user()->id.'_'.Auth::user()->name_ch.'/';
+            $foldername = $eventId.'_'.$eventContent->title.'/response/'.Auth::user()->id.'_'.Auth::user()->name_ch.'/';
             $fileNameArr = [];
 
             foreach($files as $file) {
