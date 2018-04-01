@@ -18,8 +18,7 @@
   import UploadButton from './fields/UploadButton'
   import SubmitButton from './fields/SubmitButton'
   import ShowResponse from './fields/ShowResponse'
-  import Picture from './fields/Picture'
-  import Video from './fields/Video'
+  import Image from './fields/Image'
 
   export default {
     name: 'Page',
@@ -38,8 +37,7 @@
       UploadButton,
       SubmitButton,
       ShowResponse,
-      Picture,
-      Video
+      Image
     },
     methods: {
       onDataUpdated(e){
