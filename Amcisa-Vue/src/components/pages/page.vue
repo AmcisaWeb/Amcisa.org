@@ -18,7 +18,7 @@
   import UploadButton from './fields/UploadButton'
   import SubmitButton from './fields/SubmitButton'
   import ShowResponse from './fields/ShowResponse'
-  import Image from './fields/Image'
+  import Picture from './fields/Picture'
 
   export default {
     name: 'Page',
@@ -37,7 +37,7 @@
       UploadButton,
       SubmitButton,
       ShowResponse,
-      Image
+      Picture
     },
     methods: {
       onDataUpdated(e){

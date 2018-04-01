@@ -17,7 +17,7 @@
 </template>
 
 <script>
-export default {
+  export default {
     name: 'Selections',
     props:['field','currentEventId'],
     data () {
@@ -42,22 +42,16 @@ export default {
         deep:true
       }
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-  computed:{
-    dropdownSize(){
-      if(this.field.selections.length<15) return 'medium'
-      else if(this.field.selections.length<23) return 'small'
-      else return 'mini'
-    }
-  },
-=======
->>>>>>> parent of 56c04dc... Fix DropDown Bugs
-=======
->>>>>>> parent of 56c04dc... Fix DropDown Bugs
-  created(){
+    computed:{
+      dropdownSize(){
+        if(this.field.selections.length<15) return 'medium'
+        else if(this.field.selections.length<23) return 'small'
+        else return 'mini'
+      }
+    },
+    created(){
       console.log(this.field)
+    }
   }
-}
 </script>
 
