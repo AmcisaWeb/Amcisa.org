@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-dropdown @command="(e)=> {eventData.content = e}">
+    <el-dropdown @command="(e)=> {eventData.content = e}" :size="dropdownSize">
       <el-button type="primary">
         <div v-if="eventData.content == ''">
           {{field.title}}<i class="el-icon-arrow-down el-icon--right"></i>
@@ -9,13 +9,7 @@
           {{eventData.content}}<i class="el-icon-arrow-down el-icon--right"></i>
         </div>
       </el-button>
-      <el-dropdown-menu v-if="field.selections<15" slot="dropdown">
-        <el-dropdown-item v-for="s in field.selections" :command="s">{{s}}</el-dropdown-item>
-      </el-dropdown-menu>
-      <el-dropdown-menu v-else-if="field.selections<23" size="small" slot="dropdown">
-        <el-dropdown-item v-for="s in field.selections" :command="s">{{s}}</el-dropdown-item>
-      </el-dropdown-menu>
-      <el-dropdown-menu v-else slot="dropdown" size="mini">
+      <el-dropdown-menu slot="dropdown">
         <el-dropdown-item v-for="s in field.selections" :command="s">{{s}}</el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
@@ -48,6 +42,13 @@ export default {
         deep:true
       }
     },
+  computed:{
+    dropdownSize(){
+      if(this.field.selections.length<15) return 'medium'
+      else if(this.field.selections.length<23) return 'small'
+      else return 'mini'
+    }
+  },
   created(){
       console.log(this.field)
   }
