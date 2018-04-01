@@ -1,12 +1,12 @@
 <template>
   <div>
-    <img :src="field.path" style="max-width: 500px"/>
+    <img :src="$store.state.baseUrl + '/api/download/' + field.path" style="max-width: 500px"/>
   </div>
 </template>
 
 <script>
-  export default {
-    name: 'Description',
-    props:['field']
-  }
+export default {
+  name: 'Image',
+  props: ['field']
+}
 </script>
