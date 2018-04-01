@@ -9,7 +9,13 @@
           {{eventData.content}}<i class="el-icon-arrow-down el-icon--right"></i>
         </div>
       </el-button>
-      <el-dropdown-menu slot="dropdown">
+      <el-dropdown-menu v-if="field.selections<15" slot="dropdown">
+        <el-dropdown-item v-for="s in field.selections" :command="s">{{s}}</el-dropdown-item>
+      </el-dropdown-menu>
+      <el-dropdown-menu v-else-if="field.selections<23" size="small" slot="dropdown">
+        <el-dropdown-item v-for="s in field.selections" :command="s">{{s}}</el-dropdown-item>
+      </el-dropdown-menu>
+      <el-dropdown-menu v-else slot="dropdown" size="mini">
         <el-dropdown-item v-for="s in field.selections" :command="s">{{s}}</el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
