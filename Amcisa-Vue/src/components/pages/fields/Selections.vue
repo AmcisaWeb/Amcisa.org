@@ -49,6 +49,7 @@ export default {
       }
     },
 <<<<<<< HEAD
+<<<<<<< HEAD
   computed:{
     dropdownSize(){
       if(this.field.selections.length<15) return 'medium'
@@ -56,6 +57,8 @@ export default {
       else return 'mini'
     }
   },
+=======
+>>>>>>> parent of 56c04dc... Fix DropDown Bugs
 =======
 >>>>>>> parent of 56c04dc... Fix DropDown Bugs
   created(){
