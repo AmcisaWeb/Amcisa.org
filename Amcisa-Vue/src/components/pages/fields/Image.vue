@@ -1,6 +1,7 @@
 <template>
   <div>
-    <img :src="$store.state.baseUrl + '/api/download/' + field.path" style="max-width: 500px"/>
+    <img style="max-width: 500px" :src="$store.state.baseUrl + '/api/download/' + '/32_Am斯卡提名/15207150695007.jpg'">
+    <img style="max-width: 500px" :src="$store.state.baseUrl + '/api/download/' + field.filename">
   </div>
 </template>
 
