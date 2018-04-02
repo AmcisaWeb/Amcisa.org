@@ -1,18 +1,19 @@
 <template>
   <div>
-    <el-dropdown @command="(e)=> {eventData.content = e}">
-      <el-button type="primary">
-        <div v-if="eventData.content == ''">
-          {{field.title}}<i class="el-icon-arrow-down el-icon--right"></i>
-        </div>
-        <div v-else>
-          {{eventData.content}}<i class="el-icon-arrow-down el-icon--right"></i>
-        </div>
-      </el-button>
-      <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item v-for="s in field.selections" :command="s">{{s}}</el-dropdown-item>
-      </el-dropdown-menu>
-    </el-dropdown>
+
+    <el-select v-model="eventData.content" :placeholder="field.title">
+      <el-option
+        v-for="s in field.selections"
+        :key="s"
+        :label="s"
+        :value="s">
+      </el-option>
+    </el-select>
+
+
+
+
+
   </div>
 </template>
 
