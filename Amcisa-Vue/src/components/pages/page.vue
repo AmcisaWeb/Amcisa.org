@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h6 style="margin-bottom: 80px; white-space: pre-line">{{page.description}}</h6>
+    <h6 style="margin-bottom: 80px; white-space: pre-line" v-if="page.description!=''">{{page.description}}</h6>
     <div v-for="f in page.fields">
       <component style="margin-top: 10px" :currentEventId="currentEventId" :field="f" v-on:dataChanged="onDataUpdated" v-bind:is="f.type"></component>
     </div>

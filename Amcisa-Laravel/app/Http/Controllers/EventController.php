@@ -167,17 +167,7 @@ class EventController extends Controller{
                 }
 
             }
-
-
-
-
-
-
         }
-
-
-
-
         return response()->json($resArray,200);
     }
     private function roleFilter($userRole, $pageRole){
