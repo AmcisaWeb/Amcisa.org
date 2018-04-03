@@ -127,21 +127,56 @@ class EventController extends Controller{
         return response()->json('success posted' ,201);
     }
     public function getEventData(Request $request, $id){
+        /*
         $fieldId = $request->input('fieldId');
         $eventData = EventData::where('event_id',$id)->get();
 
         $resArray = [];
         foreach ($eventData as $e){
-            $id = json_decode($e->content,true)[0]['id'];
-            $content = json_decode($e->content,true)[0]['content'];
-            if($id == $fieldId){
-                if(array_key_exists($content, $resArray)){
-                    $resArray[$content] = $resArray[$content] + 1;
-                }else{
-                    $resArray[$content] = 1;
+            $decodedContent = json_decode($e->content,true);
+            for($i=0; $i<count($decodedContent);$i++){
+                $id = $decodedContent[$i]['id'];
+                $content = $decodedContent[$i]['content'];
+                if($id == $fieldId){
+                    if(array_key_exists($content, $resArray)){
+                        $resArray[$content] = $resArray[$content] + 1;
+                    }else{
+                        $resArray[$content] = 1;
+                    }
                 }
             }
         }
+        return response()->json($resArray,200);
+        */
+        $fieldId = $request->input('fieldId');
+        $eventData = EventData::where('event_id',$id)->get();
+        $resArray = [];
+        foreach ($eventData as $e){
+            $decodedContent = json_decode($e->content,true);
+            if($decodedContent == null || count($decodedContent) == 0) continue;
+            for($i=0; $i<count($decodedContent);$i++){
+                $id = $decodedContent[$i]['id'];
+                if(!array_key_exists('content', $decodedContent[$i])) continue;
+                $content = $decodedContent[$i]['content'];
+                if($id == $fieldId){
+                    if(array_key_exists($content, $resArray)){
+                        $resArray[$content] = $resArray[$content] + 1;
+                    }else{
+                        $resArray[$content] = 1;
+                    }
+                }
+
+            }
+
+
+
+
+
+
+        }
+
+
+
 
         return response()->json($resArray,200);
     }
