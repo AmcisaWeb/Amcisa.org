@@ -1,8 +1,10 @@
 <template>
   <div>
-    <video width="400" controls>
+    <video width="80%" controls>
       <source :src="this.$store.state.baseUrl + '/api/download' + field.filename">
+      If video unable to play, click: {{this.$store.state.baseUrl + '/api/download' + field.filename}}
     </video>
+
   </div>
 </template>
 
