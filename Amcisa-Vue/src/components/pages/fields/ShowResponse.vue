@@ -7,13 +7,14 @@
       <div v-if="field.responseField.type == 'ImageSelections'">
         <div v-for="(res,index) in selectionReponse" style="margin-bottom: 50px">
           <img style="max-width: 300px" :src="$store.state.baseUrl + '/api/download/' + index">
-          <el-progress style="max-width: 100px; margin-top: -20px" :text-inside="true" :stroke-width="18" :percentage="parseInt(res*100/totalResult)"></el-progress>
+          <br>票数：({{res}} / {{totalResult}})
         </div>
       </div>
       <div v-else-if="field.responseField.type == 'MultipleSelections'">
         <div v-for="(res,index) in selectionReponse" style="margin-bottom: 50px">
           {{index}}
-          <el-progress style="max-width: 100px;" :text-inside="true" :stroke-width="18" :percentage="parseInt(res*100/totalResult)"></el-progress>
+          <br>票数：({{res}} / {{totalResult}})
+          <el-progress style="max-width: 100px;"  :percentage="parseInt(res*100/totalResult)"></el-progress>
         </div>
       </div>
     </div>
