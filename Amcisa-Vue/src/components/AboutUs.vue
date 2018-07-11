@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-button style="width: 300px; margin-bottom: 10px" @click="dialogVisible = true">关于我men</el-button>
+    <el-button style="width: 300px; margin-bottom: 10px" @click="dialogVisible = true">关于我们</el-button>
     <el-dialog
       title="关于我们"
       :visible.sync="dialogVisible"
