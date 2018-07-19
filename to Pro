@@ -1,0 +1,5 @@
+DIR=$(dirname "${BASH_SOURCE[0]}")
+
+find $DIR/Amcisa-Vue/src -type f -name 'store.js' -exec sed -i '' s/localhost/amcisa.org/ {} +
+
+find $DIR/Amcisa-Laravel -type f -name '.env' -exec sed -i '' s/localhost/amcisa.org/ {} +

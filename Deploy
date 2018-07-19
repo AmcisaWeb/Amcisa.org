@@ -1,0 +1,11 @@
+DIR=$(dirname "${BASH_SOURCE[0]}")
+
+cp $DIR/Amcisa-Vue/dist/index.html $DIR/Amcisa-Laravel/resources/views/welcome.blade.php
+
+rm -rf $DIR/Amcisa-Laravel/public_html/static/*
+
+cp -R $DIR/Amcisa-Vue/dist/static/ $DIR/Amcisa-Laravel/public_html/static 
+
+rm -rf $DIR/Amcisa-Laravel/bootstrap/cache/*
+
+touch $DIR/Amcisa-Laravel/bootstrap/cache/.gitkeep
