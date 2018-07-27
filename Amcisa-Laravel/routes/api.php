@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -81,7 +80,7 @@ Route::get('/info/get',[
 Route::get('/clear-cache', function() {
     //execute php artisan cache:clear
     $exitCode = Artisan::call('cache:clear');
-    return response("Cleared cache with wxit code: ".$exitCode,"200");
+    return response("Cleared cache with exit code: ".$exitCode,"200");
 });
 
 Route::post('/bobi', function (Request $request){
@@ -95,3 +94,39 @@ Route::post('/bobi', function (Request $request){
 
 })->middleware('auth:api');
 
+Route::get('/18-19 FOA Hunter Game/GetTime',[
+    'uses' => '_18_19_FOA_Hunter_Game\GameController@getTime'
+]);
+
+Route::get('/18-19 FOA Hunter Game/GetInventory',[
+    'uses' => '_18_19_FOA_Hunter_Game\GameController@getInventory'
+]);
+
+Route::post('/18-19 FOA Hunter Game/Purchase',[
+    'uses' => '_18_19_FOA_Hunter_Game\GameController@purchase'
+]);
+
+Route::post('/18-19 FOA Hunter Game/PlayerStart',[
+    'uses' => '_18_19_FOA_Hunter_Game\GameController@playerStart'
+]);
+
+Route::post('/18-19 FOA Hunter Game/PlayerEnd',[
+    'uses' => '_18_19_FOA_Hunter_Game\GameController@playerEnd'
+]);
+
+Route::post('/18-19 FOA Hunter Game/ResetTime',[
+    'uses' => '_18_19_FOA_Hunter_Game\GameController@resetTime'
+]);
+
+Route::post('/18-19 FOA Hunter Game/ResetCash',[
+    'uses' => '_18_19_FOA_Hunter_Game\GameController@resetCash'
+]);
+
+Route::post('/18-19 FOA Hunter Game/ResetItems',[
+    'uses' => '_18_19_FOA_Hunter_Game\GameController@resetItems'
+]);
+
+
+Route::post('/pusher',function (Request $request){
+
+});

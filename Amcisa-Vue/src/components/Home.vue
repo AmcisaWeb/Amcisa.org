@@ -16,6 +16,7 @@ import LoginForm from './LoginForm'
 import Events from './Events'
 import AddEvent from './AddEvent'
 import AboutUs from './AboutUs'
+import Pusher from 'pusher-js' // import Pusher
 
 export default {
   name: 'Home',
@@ -38,8 +39,8 @@ export default {
     */
     submitFile () {
       /*
-              Initialize the form data
-          */
+          Initialize the form data
+      */
       var formData = new FormData()
       /*
           Add the form data we need to submit
@@ -60,8 +61,8 @@ export default {
         console.log(response)
       })
         .catch(function () {
-        console.log('FAILURE!!')
-      })
+          console.log('FAILURE!!')
+        })
     },
     /*
       Handles a change on the file upload
@@ -69,6 +70,7 @@ export default {
     handleFileUpload () {
       this.file = this.$refs.file.files[0]
     }
+
   }
 }
 </script>

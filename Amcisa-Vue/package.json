@@ -18,6 +18,7 @@
     "bootstrap": "^4.0.0-beta.2",
     "bootstrap-vue": "^1.4.1",
     "element-ui": "^2.2.1",
+    "pusher-js": "^4.2.2",
     "vue": "^2.5.2",
     "vue-drag-and-drop-list": "^1.0.0",
     "vue-router": "^3.0.1",

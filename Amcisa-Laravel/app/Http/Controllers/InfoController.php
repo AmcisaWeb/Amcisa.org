@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Event;
 use App\Info;
 use Illuminate\Http\Request;
 
@@ -12,7 +11,7 @@ class InfoController extends Controller{
         $info = new Info();
         $info->content = json_encode($request->input('info'));
         $info->save();
-        return response()->json("success posted",201);
+        return response()->json("success posted",200);
     }
     public function getInfo()
     {
