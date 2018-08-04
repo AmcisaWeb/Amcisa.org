@@ -100,11 +100,11 @@ export default {
           this.panelData[0].survive = 0
           this.panelData[1].survive = 0
           og1Time.forEach((e) => {
-            if(e.end_time == null)
+            if(e.start_time!=null && e.end_time == null)
               this.panelData[0].survive ++
           })
           og2Time.forEach((e) => {
-            if(e.end_time == null)
+            if(e.start_time!=null && e.end_time == null)
               this.panelData[1].survive ++
           })
           this.$forceUpdate();
