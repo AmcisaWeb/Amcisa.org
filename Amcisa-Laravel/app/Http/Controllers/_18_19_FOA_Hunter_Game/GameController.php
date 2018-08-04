@@ -92,9 +92,22 @@ class GameController extends Controller
 
     public function playerEnd(Request $request){
         $og = $request->input('og');
-        $now = Carbon::now('Asia/Singapore')->toTimeString();
+        $endTime = $request->input('end_time');
         $idlePlayer = null;
         $table = null;
+
+        //check if time format valid
+        list($hr, $min, $sec) = explode(":", $endTime);
+        try{
+            $hr = (int)$hr;
+            $min = (int)$min;
+            $sec = (int)$sec;
+        }catch (\Exception $e){
+            return response()->json($e->getMessage(), 400);
+        }
+
+        if($hr>23 || $min>59 || $sec>59)
+            return response()->json('time format error', 400);
 
         switch ($og){
             case 1:
@@ -115,11 +128,11 @@ class GameController extends Controller
             return response()->json('OG'.$og . ' Player' . $idlePlayer->id . ' has not started, cannot be ended', 200);
         DB::connection($this->dataBase)->table($table)
             ->where('id', $idlePlayer->id)
-            ->update(['end_time' => $now]);
+            ->update(['end_time' => $endTime]);
 
         //compute cash
         $startTimeArr = explode(":", $idlePlayer->start_time);
-        $endTimeArr = explode(":", $now);
+        $endTimeArr = explode(":", $endTime);
 
         foreach ($startTimeArr as $key => $value){
             $startTimeArr[$key] = (int)$value;
@@ -134,7 +147,7 @@ class GameController extends Controller
 
         broadcast(new _18_19_FOA_Hunter_Game\PlayerEnded())->toOthers();
 
-        return response()->json('OG'.$og . ' Player' . $idlePlayer->id . ' End Time has been added: ' . $now, 200);
+        return response()->json('OG'.$og . ' Player' . $idlePlayer->id . ' End Time has been added: ' . $endTime, 200);
     }
 
     private function changeCash($offset, $og){   //return the final cash

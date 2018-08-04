@@ -4,14 +4,15 @@
     <img src="../../../src/assets/18-19_FOA_Hunter_Game/images/UI/Main.png" style="position: absolute; top:0px; left: 0px; width: 100%">
 
     <div v-if="currentCountDown!=0">
-      <img  :src="require('../../../src/assets/18-19_FOA_Hunter_Game/images/UI/numbers/' + num[0] + '.png')" style="position: absolute; top:0.5%; left: 39%; width: 8%">
-      <img  :src="require('../../../src/assets/18-19_FOA_Hunter_Game/images/UI/numbers/' + num[1] + '.png')" style="position: absolute; top:0.5%; left: 43%; width: 8%">
+      <img  :src="require('../../../src/assets/18-19_FOA_Hunter_Game/images/UI/numbers/' + num[0] + '.png')" style="position: absolute; top:0.5%; left: 37%; width: 8%">
+      <img  :src="require('../../../src/assets/18-19_FOA_Hunter_Game/images/UI/numbers/' + num[1] + '.png')" style="position: absolute; top:0.5%; left: 42%; width: 8%">
       <img  :src="require('../../../src/assets/18-19_FOA_Hunter_Game/images/UI/numbers/colon.png')" style="position: absolute; top:0.5%; left: 46%; width: 8%">
-      <img  :src="require('../../../src/assets/18-19_FOA_Hunter_Game/images/UI/numbers/' + num[2] + '.png')" style="position: absolute; top:0.5%; left: 49%; width: 8%">
-      <img  :src="require('../../../src/assets/18-19_FOA_Hunter_Game/images/UI/numbers/' + num[3] + '.png')" style="position: absolute; top:0.5%; left: 53%; width: 8%">
+      <img  :src="require('../../../src/assets/18-19_FOA_Hunter_Game/images/UI/numbers/' + num[2] + '.png')" style="position: absolute; top:0.5%; left: 50%; width: 8%">
+      <img  :src="require('../../../src/assets/18-19_FOA_Hunter_Game/images/UI/numbers/' + num[3] + '.png')" style="position: absolute; top:0.5%; left: 55%; width: 8%">
     </div>
     <div v-else>
-      <img  :src="require('../../../src/assets/18-19_FOA_Hunter_Game/images/UI/End_Game.png')" style="position: absolute; top:1.5%; left: 36%; width: 28%">
+      <img  :src="require('../../../src/assets/18-19_FOA_Hunter_Game/images/UI/End_Game.png')"
+            style="position: absolute; -webkit-transform: translate(-50%, 0); top:1.5%; left: 50%; width: 21%">
     </div>
 
     <video autoplay muted loop style="position: absolute; top:2%; left: 0px; width: 100%; z-index: -5">

@@ -1,7 +1,10 @@
 <template>
   <div>
-    <el-button @click="Start(1)">OG1 Start</el-button>
-    <el-button @click="Start(2)">OG2 Start</el-button>
+    <div style="margin-top: 50px">
+
+    </div>
+    <el-button @click="Start(1)">云雨 Start</el-button>
+    <el-button @click="Start(2)">虹晴 Start</el-button>
   </div>
 </template>
 
