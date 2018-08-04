@@ -126,7 +126,6 @@ Route::post('/18-19 FOA Hunter Game/ResetItems',[
     'uses' => '_18_19_FOA_Hunter_Game\GameController@resetItems'
 ]);
 
-
-Route::post('/pusher',function (Request $request){
-
-});
+Route::post('/18-19 FOA Hunter Game/AddCash',[
+    'uses' => '_18_19_FOA_Hunter_Game\GameController@addCash'
+]);

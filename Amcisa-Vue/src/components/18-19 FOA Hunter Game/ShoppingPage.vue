@@ -1,27 +1,34 @@
 <template>
   <div>
+
     <el-switch
-      style="display: block"
+      style="display: block; margin-top: 50px; margin-bottom: 30px"
       v-model="ogBol"
-      active-color="#4f92ff"
-      inactive-color="#57cc5f"
-      active-text="OG2"
-      inactive-text="OG1">
+      active-color="#e81212"
+      inactive-color="#3884ff"
+      >
     </el-switch>
-    <h3>可用时间：{{cash[og-1]}}秒</h3>
+    <span style="font-size: 8vw" :style="ogColor">{{ogName}}</span>
+    <br>
+    <span style="font-size: 2vw">可用时间：{{cash[og-1]}}秒</span>
+
+
     <el-row style="padding-bottom: 50px">
       <el-col :span="8" v-for="(item, index) in items" offset="0">
         <el-card style="margin: 20px">
-          <img :src="require('../../../src/assets/images/18-19_FOA_Hunter_Game/'+item.fileName)" width="200px">
-          <h5>Price: {{item.price}} seconds</h5>
+          <img :src="require('../../../src/assets/18-19_FOA_Hunter_Game/images/'+item.fileName)" width="200px">
+          <h6>{{item.description}}</h6>
+          <h5>价格: {{item.price}} 秒</h5>
           <el-input-number v-model="item.qty" :min="0" :max="10"></el-input-number>
         </el-card>
       </el-col>
     </el-row>
+
+
     <el-row>
       <div style="background-color: #555555; position: fixed; bottom: 0px; z-index: 1; height: 50px; width: 100%; box-shadow: 0 0 20px grey">
         <el-col :span="20">
-          <h3 style="color: ghostwhite; text-align: left; margin-left: 30px; padding-top: 10px; padding-bottom: 0px">Total price: {{totalPrice}}</h3>
+          <h3 style="color: ghostwhite; text-align: left; margin-left: 30px; padding-top: 10px; padding-bottom: 0px">价格: {{totalPrice}}秒</h3>
         </el-col>
         <el-col :span="4">
           <el-button @click="checkOut()" style="height: 50px; width: 100%; background-color: aquamarine; padding-top: 10px">
@@ -45,40 +52,26 @@ export default {
       cash: [0,0],
       items: [
         {
-          name: 'First Aid Pack',
-          price: 100,
-          fileName: 'First Aid Pack.png',
-          description: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-          qty: 0
-        },
-        {
-          name: 'Helmet',
-          price: 500,
-          fileName: 'Helmet.png',
-          description: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-          qty: 0
-        },
-        {
-          name: 'Bag',
-          price: 300,
+          name: 'Back Pack',
+          price: 1800,
           fileName: 'Bag.png',
-          description: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+          description: '玩家可背着Back Pack吸引猎人的注意， 进而调虎离山帮助队友进行破解任务。两组同时拥有Back Pack的队伍出现在l猎人前，猎人将随机追击。',
+          qty: 0
+        },
+        {
+          name: 'Med Kit',
+          price: 3600,
+          fileName: 'First Aid Pack.png',
+          description: '被猎人淘汰后，可选择到医疗所(任意的绳结板处)使用急救包，从而获得再次复活的机会，使用次数为一次。',
           qty: 0
         },
         {
           name: 'Frying Pan',
-          price: 50,
+          price: 15000,
           fileName: 'Frying Pan.png',
-          description: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+          description: '玩家可使用平底锅对其中一位猎人作用，该猎人酱失去作用，使用次数为一次。',
           qty: 0
-        },
-        {
-          name: 'M416',
-          price: 800,
-          fileName: 'M416.png',
-          description: 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
-          qty: 0
-        },
+        }
       ]
     }
   },
@@ -98,6 +91,18 @@ export default {
     og: function () {
       if (!this.ogBol) return 1
       else if (this.ogBol) return 2
+    },
+    ogName: function () {
+      if (!this.ogBol) return '云雨'
+      else if (this.ogBol) return '虹晴'
+    },
+    ogColor: function () {
+      if (!this.ogBol) return {
+        color: 'blue'
+      }
+      else if (this.ogBol) return {
+        color: 'red'
+      }
     }
   },
   methods: {
@@ -113,11 +118,9 @@ export default {
       })
       axiosPurchase.post('/api/18-19 FOA Hunter Game/Purchase', {
         og: this.og,
-        item1: this.items[0].qty,
-        item2: this.items[1].qty,
-        item3: this.items[2].qty,
-        item4: this.items[3].qty,
-        item5: this.items[4].qty
+        back_pack: this.items[0].qty,
+        med_kit: this.items[1].qty,
+        frying_pan: this.items[2].qty
       }).then(response => {
         this.$notify.success({
           title: '成功购买',

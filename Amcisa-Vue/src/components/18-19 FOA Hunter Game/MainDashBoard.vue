@@ -1,22 +1,50 @@
 <template>
-  <div>
-    <table style="width: 100%">
-      <tr>
-        <th><h3>OG</h3></th>
-        <th><h3>Time</h3></th>
-        <th><h3>Survive People</h3></th>
-        <th v-for="img in itemImages">
-          <img :src="require('../../../src/assets/images/18-19_FOA_Hunter_Game/'+img)"
-            style="height: 100px">
-        </th>
-      </tr>
-      <tr v-for="(r, index) in row">
-        <td><h5>{{index+1}}</h5></td>
-        <td><h5>{{r.cash}}</h5></td>
-        <td><h5>{{r.survive}}</h5></td>
-        <td v-for="i in r.item"><h5>{{i}}</h5></td>
-      </tr>
-    </table>
+  <div style="background-color: black; width: 100%; position: relative; width: 100%; padding-top: 65.416%; z-index: -99">
+
+    <img src="../../../src/assets/18-19_FOA_Hunter_Game/images/UI/Main.png" style="position: absolute; top:0px; left: 0px; width: 100%">
+
+    <div v-if="currentCountDown!=0">
+      <img  :src="require('../../../src/assets/18-19_FOA_Hunter_Game/images/UI/numbers/' + num[0] + '.png')" style="position: absolute; top:0.5%; left: 39%; width: 8%">
+      <img  :src="require('../../../src/assets/18-19_FOA_Hunter_Game/images/UI/numbers/' + num[1] + '.png')" style="position: absolute; top:0.5%; left: 43%; width: 8%">
+      <img  :src="require('../../../src/assets/18-19_FOA_Hunter_Game/images/UI/numbers/colon.png')" style="position: absolute; top:0.5%; left: 46%; width: 8%">
+      <img  :src="require('../../../src/assets/18-19_FOA_Hunter_Game/images/UI/numbers/' + num[2] + '.png')" style="position: absolute; top:0.5%; left: 49%; width: 8%">
+      <img  :src="require('../../../src/assets/18-19_FOA_Hunter_Game/images/UI/numbers/' + num[3] + '.png')" style="position: absolute; top:0.5%; left: 53%; width: 8%">
+    </div>
+    <div v-else>
+      <img  :src="require('../../../src/assets/18-19_FOA_Hunter_Game/images/UI/End_Game.png')" style="position: absolute; top:1.5%; left: 36%; width: 28%">
+    </div>
+
+    <video autoplay muted loop style="position: absolute; top:2%; left: 0px; width: 100%; z-index: -5">
+      <source src="../../../src/assets/18-19_FOA_Hunter_Game/videos/background.mp4" type="video/mp4"/>
+    </video>
+
+    <div>
+      <span class="panel1" style=" top:25.1%; left: 31%;">{{panelData[0].survive}}</span>
+      <span class="panel1" style=" top:36.2%; left: 31%;">{{panelData[0].cash}}</span>
+      <span class="panel1" style=" top:47.3%; left: 31%;">{{panelData[0].backPack}}</span>
+      <span class="panel1" style=" top:58.4%; left: 31%;">{{panelData[0].medKit}}</span>
+      <span class="panel1" style=" top:69.5%; left: 31%;">{{panelData[0].fryingPan}}</span>
+    </div>
+
+    <div>
+      <span class="panel2" style=" top:25.1%; left: 69%;">{{panelData[1].survive}}</span>
+      <span class="panel2" style=" top:36.2%; left: 69%;">{{panelData[1].cash}}</span>
+      <span class="panel2" style=" top:47.3%; left: 69%;">{{panelData[1].backPack}}</span>
+      <span class="panel2" style=" top:58.4%; left: 69%;">{{panelData[1].medKit}}</span>
+      <span class="panel2" style=" top:69.5%; left: 69%;">{{panelData[1].fryingPan}}</span>
+    </div>
+
+    <div style="position: absolute; top:120%;">
+      <span>current countdown time: {{currentCountDown}}</span>
+      <el-button @click="setCountdownTime">Set Countdown Time</el-button>
+      <el-input placeholder="Time in Seconds" v-model="inputTime"></el-input>
+      <br>
+      <span>current round: {{currentRound}}</span>
+      <el-button @click="setRound">Set Round Time</el-button>
+      <el-input placeholder="Round number" v-model="inputRound"></el-input>
+    </div>
+
+
   </div>
 </template>
 
@@ -24,30 +52,37 @@
 import axios from 'axios'
 import Pusher from 'pusher-js'
 
+
 export default {
   name: 'MainDashBoard',
   data() {
       return {
-        itemImages: [
-          'First Aid Pack.png',
-          'Helmet.png',
-          'Bag.png',
-          'Frying Pan.png',
-          'M416.png'
-        ],
-        row: [{
+        panelData: [{
           cash: 0,
           survive: 0,
-          item:[]
+          backPack: 0,
+          medKit:0,
+          fryingPan:0
         }, {
           cash: 0,
           survive: 0,
-          item: []
-        }]
+          backPack: 0,
+          medKit:0,
+          fryingPan:0
+        }],
+        gameDuration: [720, 720, 900],
+        currentRound: 1,
+        currentCountDown: 0,
+        baseNumberUrl: '../../../src/assets/18-19_FOA_Hunter_Game/images/UI/numbers/',
+        num: [0,0,0,0],
+        inputTime: '',
+        inputRound: '',
+        isCountingDown: false
       }
   },
   created () {
     axios.defaults.baseURL = this.$store.state.baseUrl
+
     this.updateInventory()
     this.updateTime()
     this.subscribe()
@@ -62,15 +97,15 @@ export default {
         .then((response) => {
           var og1Time = response.data['og1']
           var og2Time = response.data['og2']
-          this.row[0].survive = 0
-          this.row[1].survive = 0
+          this.panelData[0].survive = 0
+          this.panelData[1].survive = 0
           og1Time.forEach((e) => {
             if(e.end_time == null)
-              this.row[0].survive ++
+              this.panelData[0].survive ++
           })
           og2Time.forEach((e) => {
             if(e.end_time == null)
-              this.row[1].survive ++
+              this.panelData[1].survive ++
           })
           this.$forceUpdate();
         })
@@ -85,20 +120,16 @@ export default {
       })
       axiosInventory.get('/api/18-19 FOA Hunter Game/GetInventory')
         .then((response) => {
-          this.row[0].cash = response.data[0]['cash']
-          this.row[1].cash = response.data[1]['cash']
+          this.panelData[0].cash = response.data[0]['cash']
+          this.panelData[1].cash = response.data[1]['cash']
 
-          this.row[0].item[0] = response.data[0]['item1']
-          this.row[0].item[1] = response.data[0]['item2']
-          this.row[0].item[2] = response.data[0]['item3']
-          this.row[0].item[3] = response.data[0]['item4']
-          this.row[0].item[4] = response.data[0]['item5']
+          this.panelData[0].backPack = response.data[0]['back_pack']
+          this.panelData[0].medKit = response.data[0]['med_kit']
+          this.panelData[0].fryingPan = response.data[0]['frying_pan']
 
-          this.row[1].item[0] = response.data[1]['item1']
-          this.row[1].item[1] = response.data[1]['item2']
-          this.row[1].item[2] = response.data[1]['item3']
-          this.row[1].item[3] = response.data[1]['item4']
-          this.row[1].item[4] = response.data[1]['item5']
+          this.panelData[1].backPack = response.data[1]['back_pack']
+          this.panelData[1].medKit = response.data[1]['med_kit']
+          this.panelData[1].fryingPan = response.data[1]['frying_pan']
 
           this.$forceUpdate();
         })
@@ -111,6 +142,12 @@ export default {
       pusher.subscribe('18-19_FOA_Hunter_Game')
       pusher.bind('PlayerStarted', data => {
         this.updateTime()
+        if(this.isCountingDown == false)
+        {
+          this.isCountingDown = true
+          this.startGame()
+        }
+
       })
       pusher.bind('PlayerEnded', data => {
         this.updateTime()
@@ -119,16 +156,64 @@ export default {
       pusher.bind('Purchased', data => {
         this.updateInventory()
       })
+    },
+    startGame(){
+      this.currentCountDown = this.gameDuration[this.currentRound-1]
+      this.$options.interval = setInterval(this.everyTick, 1000)
+    },
+    everyTick(){
+      this.currentCountDown -= 1
+      if(this.currentCountDown == 0){
+        this.currentRound += 1;
+        this.isCountingDown = false
+        clearInterval(this.$options.interval)
+      }
+      var min = Math.floor(this.currentCountDown/60)
+      var sec = this.currentCountDown%60
+      this.num[0] = Math.floor(min/10)
+      this.num[1] = min%10
+      this.num[2] = Math.floor(sec/10)
+      this.num[3] = sec%10
+    },
+    setCountdownTime(){
+      this.currentCountDown = parseInt(this.inputTime)
+    },
+    setRound(){
+      this.currentRound = parseInt(this.inputRound)
+    },
+    beforeDestroy () {
+      clearInterval(this.$options.interval)
     }
   }
 }
 </script>
 
 <style scoped>
+  @font-face {
+    font-family: 'Digital-7';
+    src: url("../../../src/assets/fonts/digital-7.monoitalic.ttf");
+  }
   th{
     border: 20px solid lightgray;
     background-color: #8cc5ff;
     border-radius: 75px;
     width: 100px;
+  }
+
+  .panel1{
+    color: rgba(113, 132, 255, 1);
+    font-size: 4vw;
+    text-shadow: 0 0 10px rgb(40, 69, 255), 0 0 4px rgb(40, 69, 255);
+    font-family: "Digital-7";
+    position: absolute;
+    -webkit-transform: translate(-50%, 0);
+  }
+  .panel2{
+    color: rgba(255, 132, 113, 1);
+    font-size: 4vw;
+    text-shadow: 0 0 10px rgb(255, 69, 40), 0 0 4px rgb(255, 69, 40);
+    font-family: "Digital-7";
+    position: absolute;
+    -webkit-transform: translate(-50%, 0);
   }
 </style>
