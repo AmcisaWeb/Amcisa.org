@@ -36,6 +36,8 @@
     </div>
 
     <div style="position: absolute; top:120%;">
+      <el-button @click="startGame">Start Game</el-button>
+      <br>
       <span>current countdown time: {{currentCountDown}}</span>
       <el-button @click="setCountdownTime">Set Countdown Time</el-button>
       <el-input placeholder="Time in Seconds" v-model="inputTime"></el-input>
@@ -145,7 +147,6 @@ export default {
         this.updateTime()
         if(this.isCountingDown == false)
         {
-          this.isCountingDown = true
           this.startGame()
         }
 
@@ -159,6 +160,7 @@ export default {
       })
     },
     startGame(){
+      this.isCountingDown = true
       this.currentCountDown = this.gameDuration[this.currentRound-1]
       this.$options.interval = setInterval(this.everyTick, 1000)
     },
