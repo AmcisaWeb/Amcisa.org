@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use function Sodium\crypto_generichash_update;
 
 class GameController extends Controller
 {
@@ -148,6 +149,44 @@ class GameController extends Controller
         broadcast(new _18_19_FOA_Hunter_Game\PlayerEnded())->toOthers();
 
         return response()->json('OG'.$og . ' Player' . $idlePlayer->id . ' End Time has been added: ' . $endTime, 200);
+    }
+
+    public function allPlayersEnd(Request $request){
+        $now = Carbon::now('Asia/Singapore')->toTimeString();
+
+        for($i=1; $i<3; $i++){
+            $table = $this->tables[$i];
+            $idlePlayers = DB::connection($this->dataBase)->table($table)
+                ->whereNotNull('start_time')
+                ->whereNull('end_time')
+                ->get();
+
+            DB::connection($this->dataBase)->table($table)
+                ->whereNotNull('start_time')
+                ->whereNull('end_time')
+                ->update(['end_time' => $now]);
+
+            //compute cash
+            $deltaTime = 0;
+            foreach ($idlePlayers as $idlePlayer){
+                $startTimeArr = explode(":", $idlePlayer->start_time);
+                $endTimeArr = explode(":", $now);
+
+                foreach ($startTimeArr as $key => $value){
+                    $startTimeArr[$key] = (int)$value;
+                }
+                foreach ($endTimeArr as $key => $value){
+                    $endTimeArr[$key] = (int)$value;
+                }
+                $startTimeSec = $startTimeArr[0]*3600 + $startTimeArr[1]*60 + $startTimeArr[2];
+                $endTimeSec = $endTimeArr[0]*3600 + $endTimeArr[1]*60 + $endTimeArr[2];
+                $deltaTime += $endTimeSec - $startTimeSec;
+            }
+            $this->changeCash($deltaTime, $i);
+        }
+
+        broadcast(new _18_19_FOA_Hunter_Game\PlayerEnded())->toOthers();
+        return response()->json('All Players has ended: ' . $now, 200);
     }
 
     private function changeCash($offset, $og){   //return the final cash

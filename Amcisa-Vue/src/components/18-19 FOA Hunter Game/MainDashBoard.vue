@@ -168,6 +168,7 @@ export default {
         this.currentRound += 1;
         this.isCountingDown = false
         clearInterval(this.$options.interval)
+        this.allPlayersEnd()
       }
       var min = Math.floor(this.currentCountDown/60)
       var sec = this.currentCountDown%60
@@ -182,9 +183,29 @@ export default {
     setRound(){
       this.currentRound = parseInt(this.inputRound)
     },
-    beforeDestroy () {
-      clearInterval(this.$options.interval)
+    allPlayersEnd(){
+      var axiosAllPlayersEnd = axios.create({
+        headers: {'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + this.$store.state.currentUser.token }
+      })
+      axiosAllPlayersEnd.post('/api/18-19 FOA Hunter Game/AllPlayersEnd', {
+      }).then(response => {
+        this.$notify.success({
+          title: '成功',
+          message: response.data,
+          duration: 1000
+        })
+      }).catch(error => {
+        this.$notify.error({
+          title: '错误',
+          message: error,
+          duration: 1000
+        })
+      })
     }
+  },
+  beforeDestroy () {
+    clearInterval(this.$options.interval)
   }
 }
 </script>

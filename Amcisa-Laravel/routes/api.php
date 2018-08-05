@@ -114,6 +114,10 @@ Route::post('/18-19 FOA Hunter Game/PlayerEnd',[
     'uses' => '_18_19_FOA_Hunter_Game\GameController@playerEnd'
 ]);
 
+Route::post('/18-19 FOA Hunter Game/AllPlayersEnd',[
+    'uses' => '_18_19_FOA_Hunter_Game\GameController@allPlayersEnd'
+]);
+
 Route::post('/18-19 FOA Hunter Game/ResetTime',[
     'uses' => '_18_19_FOA_Hunter_Game\GameController@resetTime'
 ]);
