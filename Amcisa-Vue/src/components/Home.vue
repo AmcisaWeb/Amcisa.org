@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="title" style="font-size: 6rem;">AMCISA</h1>
+    <h1 class="title" style="font-size: 6rem;">[AMCISA]</h1>
     <router-link to="/info">
       <el-button style="width: 300px; margin-bottom: 10px">升学资讯</el-button>
     </router-link>
